@@ -1,0 +1,30 @@
+# Never commit secrets or live configuration
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+*.tar
+*-passwords.txt
+*credentials*
+*secret*
+.env
+.env.*
+
+# Wazuh installer artifacts
+wazuh-install-files/
+wazuh-install.log
+
+# Raw, unsanitized exports — sanitize into config/ before committing
+raw/
+*-unsanitized.*
+*.bak
+
+# OS noise
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp

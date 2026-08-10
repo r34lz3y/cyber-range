@@ -1,0 +1,95 @@
+<svg viewBox="0 0 1200 340" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cyber Range — Self-Hosted Security Operations Lab">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#05070A"/>
+      <stop offset="60%" stop-color="#050A10"/>
+      <stop offset="100%" stop-color="#010A14"/>
+    </linearGradient>
+    <linearGradient id="fade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00E5FF" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#00E5FF" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#00E5FF" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fadeOrange" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF6E27" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#FF6E27" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#FF6E27" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge>
+        <feMergeNode in="b"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="340" fill="url(#bg)"/>
+
+  <!-- perspective grid -->
+  <g stroke="#00E5FF" fill="none">
+    <g opacity="0.22">
+      <path d="M600 206 L-500 340"/><path d="M600 206 L-260 340"/><path d="M600 206 L-60 340"/>
+      <path d="M600 206 L110 340"/><path d="M600 206 L250 340"/><path d="M600 206 L370 340"/>
+      <path d="M600 206 L470 340"/><path d="M600 206 L555 340"/><path d="M600 206 L645 340"/>
+      <path d="M600 206 L730 340"/><path d="M600 206 L830 340"/><path d="M600 206 L950 340"/>
+      <path d="M600 206 L1090 340"/><path d="M600 206 L1260 340"/><path d="M600 206 L1460 340"/>
+      <path d="M600 206 L1700 340"/>
+    </g>
+    <g stroke-width="1">
+      <path d="M0 210 H1200" opacity="0.10"/>
+      <path d="M0 217 H1200" opacity="0.13"/>
+      <path d="M0 227 H1200" opacity="0.16"/>
+      <path d="M0 241 H1200" opacity="0.20"/>
+      <path d="M0 260 H1200" opacity="0.24"/>
+      <path d="M0 285 H1200" opacity="0.28"/>
+      <path d="M0 317 H1200" opacity="0.32"/>
+    </g>
+  </g>
+
+  <!-- horizon -->
+  <rect x="0" y="204.5" width="1200" height="1.6" fill="url(#fade)" filter="url(#softglow)"/>
+
+  <!-- eyebrow -->
+  <rect x="0" y="62" width="1200" height="1" fill="url(#fade)" opacity="0.35"/>
+  <text x="600" y="50" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="14" letter-spacing="7" fill="#7FE9FF" opacity="0.85">
+    PROXMOX VE · OPNSENSE · WAZUH · GREENBONE
+  </text>
+
+  <!-- title -->
+  <text x="600" y="140" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="72" font-weight="700" letter-spacing="14" fill="#00E5FF" filter="url(#glow)">
+    CYBER RANGE
+  </text>
+
+  <!-- subtitle -->
+  <text x="600" y="178" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+        font-size="16" letter-spacing="9" fill="#FF6E27" filter="url(#softglow)">
+    SELF-HOSTED SECURITY OPERATIONS LAB
+  </text>
+
+  <rect x="380" y="192" width="440" height="1" fill="url(#fadeOrange)"/>
+
+  <!-- corner brackets -->
+  <g stroke="#FF6E27" stroke-width="2" fill="none" opacity="0.9" filter="url(#softglow)">
+    <path d="M28 20 H74 M28 20 V56"/>
+    <path d="M1172 20 H1126 M1172 20 V56"/>
+    <path d="M28 320 H74 M28 320 V284"/>
+    <path d="M1172 320 H1126 M1172 320 V284"/>
+  </g>
+  <g fill="#00E5FF" opacity="0.9">
+    <rect x="24" y="16" width="7" height="7"/>
+    <rect x="1169" y="16" width="7" height="7"/>
+    <rect x="24" y="317" width="7" height="7"/>
+    <rect x="1169" y="317" width="7" height="7"/>
+  </g>
+</svg>
