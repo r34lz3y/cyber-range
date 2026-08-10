@@ -2,6 +2,8 @@
 
 Every issue encountered building this environment, with the reasoning that led to each fix. Recorded because diagnosis is the transferable skill — a list of commands that worked demonstrates nothing.
 
+I am learning this field, not practicing it professionally, and I use Claude (Anthropic's AI assistant) to help reason through these problems. Several entries below describe incorrect assumptions — mine and the assistant's — that cost time before the real cause surfaced. Those are left in deliberately. See [About this project](../README.md#about-this-project--read-this-first).
+
 Addresses shown use the [RFC 5737](https://datatracker.ietf.org/doc/html/rfc5737) documentation range in place of real upstream values.
 
 ---

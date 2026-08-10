@@ -16,6 +16,18 @@
 
 ---
 
+## About this project — read this first
+
+**I am not a cybersecurity professional.** I am learning the field by building a working environment rather than by watching tutorials, and this repository is the record of that process.
+
+**I use Claude (Anthropic's AI assistant) throughout.** It helps me reason through architecture decisions, interpret errors, and draft documentation. I treat it as a knowledgeable collaborator, not an oracle — its suggestions have been wrong more than once in this repository, and those instances are documented in the [troubleshooting log](docs/troubleshooting.md) alongside my own mistakes.
+
+**What is genuinely mine:** every command was run by me, on real hardware, against real failures. The environment exists. The tests were executed and their output is reproduced verbatim, including the run where my isolation controls failed. Nothing here is theoretical or copied from a walkthrough.
+
+**How to read this repository.** It documents a learning process honestly, including the dead ends. If you are experienced in this field and see something wrong, I would genuinely welcome the correction — open an issue.
+
+---
+
 ## Overview
 
 This is a working security operations lab: three isolated network segments behind an OPNsense gateway, centralized telemetry in Wazuh, vulnerability management via Greenbone, and Windows and Linux endpoints generating real activity to detect against.
