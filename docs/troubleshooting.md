@@ -241,6 +241,58 @@ Detection was working. The gap was between storage and presentation.
 
 ---
 
+## 11 — Firewall rule silently invalidated by a DHCP lease change
+
+**Symptom.** Access from the administrative workstation into the lab segment stopped working after a reboot. Every other path functioned: hosts inside the lab reached each other, the firewall GUI was reachable, the static route existed and pointed at the correct gateway.
+
+**Investigation.** Inspecting the rule in the GUI showed it configured correctly. The live firewall log settled it in one look:
+
+```
+WAN  In  TCP  192.0.2.50:50187 -> 10.10.10.40:22  block  Default deny / state violation rule
+```
+
+The workstation was `.50`. The rule permitted `.30`.
+
+**Root cause.** The pass rule was scoped to a single host address obtained by DHCP. A new lease changed the address, the rule stopped matching, and traffic fell through to default deny. Nothing failed and nothing logged an error — the rule was still valid, just no longer describing the right host.
+
+Compounding it: a subsequent GUI edit did not persist, so the loaded ruleset continued to reference the old address even after correction. Verified with `pfctl -sr`, which reads the compiled ruleset rather than the intended configuration.
+
+**Resolution.** Corrected the address in the saved configuration, reloaded the filter, and reserved the workstation's address upstream so it stops moving.
+
+**Takeaway.** Two distinct lessons.
+
+Access control keyed to a dynamically assigned identifier has an expiry date nobody is told about. This was the third instance of the same pattern in this build — a rule, a route, and a gateway all pinned to DHCP addresses. Infrastructure that enforces policy should not depend on identifiers that can change without notice.
+
+Second: "the settings look correct" is a claim about intent, not about state. `pfctl -sr` shows what the firewall is actually enforcing, and the two diverged here. Verify the running configuration, not the configuration screen.
+
+---
+
+## 12 — Service killed for exceeding its startup timeout
+
+**Symptom.** `wazuh-manager` reported `Active: failed (Result: timeout)` with several child processes still running.
+
+**Root cause.** systemd terminated the unit for exceeding the default startup window. Nothing was misconfigured — the manager simply took longer to initialize than the timeout allowed, because the indexer was starting simultaneously on a four-core CPU with no SMT. The partial shutdown left orphaned processes that then interfered with restart attempts.
+
+**Resolution.** Stop cleanly, clear the orphans, and extend the timeout:
+
+```bash
+systemctl stop wazuh-manager
+/var/ossec/bin/wazuh-control stop
+
+mkdir -p /etc/systemd/system/wazuh-manager.service.d
+cat > /etc/systemd/system/wazuh-manager.service.d/override.conf <<'EOF'
+[Service]
+TimeoutStartSec=600
+EOF
+
+systemctl daemon-reload
+systemctl start wazuh-manager
+```
+
+**Takeaway.** Software tested on recommended hardware carries timing assumptions that undersized hardware violates. The failure is real but the cause is environmental, not a defect — and the distinction matters, because chasing a configuration error here would waste hours. Constrained hardware surfaces this class of problem that adequate hardware hides.
+
+---
+
 ## Diagnostic techniques worth reusing
 
 | Technique | Answers |
@@ -251,3 +303,5 @@ Detection was working. The gap was between storage and presentation.
 | Timeout vs. connection reset | Silent drop versus active refusal — different root causes entirely |
 | Checking `alerts.json` before the dashboard | Distinguishes detection failure from presentation failure |
 | Generating known-good test events | The only way to prove a collection path works end to end |
+| Firewall live log view | Shows the actual source address and matching rule, not the assumed one |
+| `pfctl -sr` after any GUI change | Confirms the compiled ruleset matches the intended configuration |
