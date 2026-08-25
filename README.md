@@ -201,12 +201,18 @@ Evidence in [`evidence/isolation-tests/`](evidence/isolation-tests/).
 
 ## Detections
 
-| Rule | Description | MITRE | Source |
-|---|---|---|---|
-| 5710 | SSH login attempt with non-existent user | T1110.001 · T1021.004 | journald |
-| 2502 | Repeated authentication failure | T1110 | journald |
+| ID | Detection | MITRE | Source | Status |
+|---|---|---|---|---|
+| 5710 | SSH login attempt with non-existent user | T1110.001 · T1021.004 | journald | ✅ Firing |
+| 2502 | Repeated authentication failure | T1110 | journald | ✅ Firing |
+| D2 | Privileged command execution by an interactive user | T1548 | auditd | 🟠 Data flowing |
+| D3 | Modification of identity or authorization files | T1098 · T1136 | auditd | 🟠 Data flowing |
+| D4 | SSH configuration or authorized_keys change | T1098.004 · T1556 | auditd · FIM | 🟠 Data flowing |
+| D5 | Agent stopped reporting | T1562.001 | manager | ⬜ Planned |
 
-Additional detections land as endpoints are onboarded in Phase 2.
+Rationale and tuning notes for each in [`docs/phase2-telemetry.md`](docs/phase2-telemetry.md).
+
+**D5 is there because of a real failure in this build.** Two separate collection paths silently gathered nothing while reporting healthy. An endpoint that stops sending telemetry is indistinguishable from an endpoint where nothing is happening, so the monitoring needs monitoring.
 
 ---
 
@@ -216,8 +222,8 @@ Additional detections land as endpoints are onboarded in Phase 2.
 .
 ├── docs/
 │   ├── phase1-infrastructure.md      # architecture, IP plan, ADRs
-│   ├── troubleshooting.md            # full failure log
-│   └── adr/                          # architecture decision records
+│   ├── phase2-telemetry.md           # log sources, audit rules, detections
+│   └── troubleshooting.md            # full failure log
 ├── evidence/
 │   ├── isolation-tests/              # segmentation verification output
 │   └── screenshots/
